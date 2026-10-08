@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Energy Analytics Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-icon">⚡</div>
+      <div>
+        <h1>EnergyAI</h1>
+        <p>Smart Analytics Dashboard</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#" class="nav-link active" data-page="dashboard">📊 Dashboard</a>
+      <a href="#" class="nav-link" data-page="analytics">📈 Energy Analytics</a>
+      <a href="#" class="nav-link" data-page="prediction">🔮 Energy Prediction</a>
+      <a href="#" class="nav-link" data-page="ai">🤖 AI Energy Analyst</a>
+      <a href="#" class="nav-link" data-page="model">🧠 ML Model Info</a>
+    </nav>
+    <div class="backend-status" id="backend-status">● Checking backend…</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <button class="menu-btn" id="menu-btn">☰</button>
+      <h2 id="page-title">Dashboard</h2>
+      <span class="badge" id="model-badge">Linear Regression</span>
+    </div>
+
+    <!-- DASHBOARD -->
+    <section id="page-dashboard" class="page active">
+      <div class="grid stats-grid" id="stat-cards">
+        <div class="card stat"><h3>Total Consumption</h3><p id="s-total">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Average per Interval</h3><p id="s-avg">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Maximum</h3><p id="s-max">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Minimum</h3><p id="s-min">–</p><span>kWh</span></div>
+        <div class="card stat highlight"><h3>Predicted Next Hour</h3><p id="s-pred">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Peak Hour</h3><p id="s-peak">–</p><span>highest avg usage</span></div>
+      </div>
+      <div class="card">
+        <h3>Energy Usage Trend (Last 30 Days)</h3>
+        <canvas id="chart-trend" height="110"></canvas>
+      </div>
+    </section>
+
+    <!-- ANALYTICS -->
+    <section id="page-analytics" class="page">
+      <div class="grid stats-grid">
+        <div class="card stat"><h3>Average</h3><p id="a-avg">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Median</h3><p id="a-median">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Std Deviation</h3><p id="a-std">–</p><span>kWh</span></div>
+        <div class="card stat"><h3>Min / Max</h3><p id="a-minmax">–</p><span>kWh</span></div>
+      </div>
+      <div class="card">
+        <h3>Consumption Aggregation</h3>
+        <div class="tabs" id="agg-tabs">
+          <button class="tab active" data-agg="daily">Daily</button>
+          <button class="tab" data-agg="weekly">Weekly</button>
+          <button class="tab" data-agg="monthly">Monthly</button>
+        </div>
+        <canvas id="chart-agg" height="120"></canvas>
+      </div>
+      <div class="grid two-col">
+        <div class="card"><h3>Average Consumption by Hour (Peak Analysis)</h3><canvas id="chart-hourly" height="160"></canvas></div>
+        <div class="card"><h3>Average by Day of Week</h3><canvas id="chart-dow" height="160"></canvas></div>
+      </div>
+      <div class="card" id="peak-analysis"><h3>Peak Usage Analysis</h3><p id="peak-text">Loading…</p></div>
+    </section>
+
+    <!-- PREDICTION -->
+    <section id="page-prediction" class="page">
+      <div class="grid two-col">
+        <div class="card">
+          <h3>Prediction Inputs</h3>
+          <form id="predict-form">
+            <label>Temperature (°C)<input type="number" step="0.1" name="temperature" value="24" required /></label>
+            <label>Humidity (%)<input type="number" step="0.1" name="humidity" value="55" required /></label>
+            <label>Hour (0–23)<input type="number" min="0" max="23" name="hour" value="18" required /></label>
+            <label>Day of Week (0=Mon … 6=Sun)<input type="number" min="0" max="6" name="day_of_week" value="2" required /></label>
+            <label>Occupancy (%)<input type="number" min="0" max="100" name="occupancy" value="70" required /></label>
+            <label>Previous Consumption (kWh)<input type="number" step="0.01" name="previous_consumption" value="2.5" required /></label>
+            <button type="submit" id="predict-btn">Predict Consumption</button>
+          </form>
+        </div>
+        <div class="card result-card">
+          <h3>Predicted Energy Consumption</h3>
+          <div class="prediction-result" id="prediction-result">
+            <span class="placeholder">Submit the form to get a live prediction from the ML backend</span>
+          </div>
+          <div id="prediction-details"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI ANALYST -->
+    <section id="page-ai" class="page">
+      <div class="card">
+        <h3>🤖 AI Energy Analyst</h3>
+        <p class="muted">Connect to Google AI Studio / Gemini later. The button below collects live analytics and sends them to your Gemini endpoint via the backend proxy. For now, it generates a rule-based local analysis from real API data.</p>
+        <button id="ai-generate-btn" class="primary">Generate AI Insights</button>
+        <div id="ai-output" class="ai-output"><span class="muted">No insights generated yet.</span></div>
+      </div>
+    </section>
+
+    <!-- MODEL INFO -->
+    <section id="page-model" class="page">
+      <div class="card">
+        <h3>ML Model Information</h3>
+        <div id="model-info" class="model-info"><p class="muted">Loading…</p></div>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/prediction.js"></script>
+<script src="js/ai-analyst.js"></script>
+<script>
+// Navigation
+const links = document.querySelectorAll(".nav-link");
+const titles = { dashboard: "Dashboard", analytics: "Energy Analytics",
+  prediction: "Energy Prediction", ai: "AI Energy Analyst", model: "ML Model Info" };
+links.forEach(l => l.addEventListener("click", e => {
+  e.preventDefault();
+  links.forEach(x => x.classList.remove("active"));
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  l.classList.add("active");
+  document.getElementById("page-" + l.dataset.page).classList.add("active");
+  document.getElementById("page-title").textContent = titles[l.dataset.page];
+  document.getElementById("sidebar").classList.remove("open");
+}));
+document.getElementById("menu-btn").onclick = () =>
+  document.getElementById("sidebar").classList.toggle("open");
+// Backend health check
+fetch(`${API_BASE_URL}/api/health`).then(r => r.ok ? r.json() : Promise.reject())
+  .then(() => document.getElementById("backend-status").innerHTML = "● Backend connected")
+  .catch(() => document.getElementById("backend-status").innerHTML = "● Backend offline");
+</script>
+</body>
+</html>

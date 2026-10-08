@@ -1,0 +1,1081 @@
+/* =========================================================
+   ENERGYAI — PROFESSIONAL ENERGY ANALYTICS DASHBOARD
+   ========================================================= */
+
+:root {
+  --bg: #f4f7fb;
+  --card: #ffffff;
+  --sidebar: #0b1220;
+  --sidebar-light: #151f32;
+
+  --text: #172033;
+  --text-light: #ffffff;
+  --muted: #718096;
+  --muted-light: #a8b3c5;
+
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --primary-soft: #eaf2ff;
+
+  --green: #10b981;
+  --green-soft: #e8faf4;
+
+  --orange: #f59e0b;
+  --orange-soft: #fff7e6;
+
+  --red: #ef4444;
+  --red-soft: #fff0f0;
+
+  --border: #e5eaf1;
+
+  --radius: 16px;
+  --radius-small: 10px;
+
+  --shadow:
+    0 2px 6px rgba(15, 23, 42, 0.04),
+    0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family:
+    "Segoe UI",
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+
+  background: var(--bg);
+  color: var(--text);
+
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+/* =========================================================
+   MAIN APP
+   ========================================================= */
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+  width: 255px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b1220 0%,
+      #101a2d 100%
+    );
+
+  color: var(--text-light);
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  padding: 25px 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 1000;
+
+  box-shadow:
+    4px 0 25px rgba(15, 23, 42, 0.08);
+}
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 5px 8px;
+
+  margin-bottom: 38px;
+}
+
+.brand-icon {
+  width: 43px;
+  height: 43px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 23px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #10b981
+    );
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.25);
+}
+
+.brand h1 {
+  font-size: 20px;
+  font-weight: 750;
+
+  letter-spacing: -0.4px;
+}
+
+.brand p {
+  font-size: 10px;
+
+  color: var(--muted-light);
+
+  margin-top: 2px;
+
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+
+  flex: 1;
+}
+
+.nav-link {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  color: #b8c2d3;
+
+  text-decoration: none;
+
+  padding: 13px 14px;
+
+  border-radius: 11px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.06);
+
+  color: #ffffff;
+
+  transform: translateX(2px);
+}
+
+.nav-link.active {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 8px 20px rgba(37, 99, 235, 0.22);
+}
+
+.nav-link.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 25%;
+
+  width: 3px;
+  height: 50%;
+
+  background: #ffffff;
+
+  border-radius: 0 4px 4px 0;
+}
+
+/* =========================================================
+   BACKEND STATUS
+   ========================================================= */
+
+.backend-status {
+  padding: 13px 10px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 11px;
+
+  color: #8f9caf;
+
+  letter-spacing: 0.2px;
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.main {
+  flex: 1;
+
+  margin-left: 255px;
+
+  padding: 28px 34px 50px;
+
+  min-width: 0;
+}
+
+/* =========================================================
+   TOP BAR
+   ========================================================= */
+
+.topbar {
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  margin-bottom: 28px;
+}
+
+.topbar h2 {
+  flex: 1;
+
+  font-size: 25px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  background: var(--primary-soft);
+
+  color: var(--primary-dark);
+
+  padding: 7px 13px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  border: 1px solid #d8e7ff;
+}
+
+.badge::before {
+  content: "●";
+
+  font-size: 8px;
+
+  color: var(--green);
+}
+
+.menu-btn {
+  display: none;
+
+  border: none;
+
+  background: #ffffff;
+
+  color: var(--text);
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  box-shadow: var(--shadow);
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.card {
+  background: var(--card);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--radius);
+
+  box-shadow: var(--shadow);
+
+  padding: 23px 25px;
+
+  margin-bottom: 20px;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  box-shadow:
+    0 4px 10px rgba(15, 23, 42, 0.04),
+    0 15px 35px rgba(15, 23, 42, 0.07);
+}
+
+.card h3 {
+  color: var(--text);
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  margin-bottom: 16px;
+
+  letter-spacing: -0.1px;
+}
+
+/* =========================================================
+   GRID
+   ========================================================= */
+
+.grid {
+  display: grid;
+
+  gap: 18px;
+}
+
+.stats-grid {
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(190px, 1fr)
+    );
+
+  margin-bottom: 22px;
+}
+
+.two-col {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* =========================================================
+   STATISTICS / KPI CARDS
+   ========================================================= */
+
+.stat {
+  position: relative;
+
+  overflow: hidden;
+
+  min-height: 145px;
+
+  padding: 21px 22px;
+}
+
+.stat::after {
+  content: "";
+
+  position: absolute;
+
+  right: -30px;
+  bottom: -35px;
+
+  width: 110px;
+  height: 110px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.045);
+}
+
+.stat h3 {
+  color: var(--muted);
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+  margin-bottom: 12px;
+}
+
+.stat p {
+  color: var(--text);
+
+  font-size: 29px;
+
+  font-weight: 750;
+
+  letter-spacing: -1px;
+
+  line-height: 1.1;
+
+  margin-bottom: 7px;
+}
+
+.stat span {
+  color: var(--muted);
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+/* =========================================================
+   HIGHLIGHT PREDICTION CARD
+   ========================================================= */
+
+.stat.highlight {
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb 0%,
+      #1d4ed8 60%,
+      #1642b5 100%
+    );
+
+  border: none;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 12px 28px rgba(37, 99, 235, 0.2);
+}
+
+.stat.highlight::after {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.stat.highlight h3,
+.stat.highlight p,
+.stat.highlight span {
+  color: #ffffff;
+}
+
+.stat.highlight h3 {
+  opacity: 0.85;
+}
+
+/* =========================================================
+   CHART CONTAINERS
+   ========================================================= */
+
+.card canvas {
+  width: 100% !important;
+
+  max-width: 100%;
+
+  display: block;
+}
+
+#chart-trend {
+  width: 100% !important;
+
+  height: 310px !important;
+
+  max-height: 310px;
+}
+
+#chart-agg {
+  width: 100% !important;
+
+  height: 320px !important;
+
+  max-height: 320px;
+}
+
+#chart-hourly,
+#chart-dow {
+  width: 100% !important;
+
+  height: 290px !important;
+
+  max-height: 290px;
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.tabs {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  margin-bottom: 20px;
+
+  flex-wrap: wrap;
+}
+
+.tab {
+  border: 1px solid var(--border);
+
+  background: #ffffff;
+
+  color: var(--muted);
+
+  padding: 8px 17px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  border-color: #b8cff9;
+
+  color: var(--primary);
+}
+
+.tab.active {
+  background: var(--primary);
+
+  border-color: var(--primary);
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 12px rgba(37, 99, 235, 0.18);
+}
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+form label {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+  margin-bottom: 15px;
+}
+
+form input {
+  width: 100%;
+
+  display: block;
+
+  margin-top: 7px;
+
+  padding: 12px 13px;
+
+  background: #ffffff;
+
+  border: 1px solid #d9e0ea;
+
+  border-radius: 9px;
+
+  color: var(--text);
+
+  font-size: 14px;
+
+  transition:
+    border 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+form input:hover {
+  border-color: #b7c3d4;
+}
+
+form input:focus {
+  outline: none;
+
+  border-color: var(--primary);
+
+  box-shadow:
+    0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+button.primary,
+#predict-btn {
+  width: auto;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--primary),
+      var(--primary-dark)
+    );
+
+  color: #ffffff;
+
+  border: none;
+
+  padding: 12px 22px;
+
+  border-radius: 10px;
+
+  font-size: 13px;
+
+  font-weight: 650;
+
+  cursor: pointer;
+
+  margin-top: 8px;
+
+  box-shadow:
+    0 6px 14px rgba(37, 99, 235, 0.18);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+button.primary:hover,
+#predict-btn:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 9px 20px rgba(37, 99, 235, 0.23);
+}
+
+button.primary:active,
+#predict-btn:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+
+  transform: none !important;
+}
+
+/* =========================================================
+   PREDICTION RESULT
+   ========================================================= */
+
+.result-card {
+  text-align: center;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.prediction-result {
+  color: var(--primary);
+
+  font-size: 48px;
+
+  font-weight: 800;
+
+  letter-spacing: -1.5px;
+
+  padding: 32px 0 24px;
+}
+
+.prediction-result .placeholder {
+  display: block;
+
+  color: var(--muted);
+
+  font-size: 13px;
+
+  font-weight: 400;
+
+  letter-spacing: 0;
+
+  line-height: 1.6;
+}
+
+#prediction-details {
+  text-align: left;
+
+  color: var(--muted);
+
+  font-size: 12px;
+
+  line-height: 1.8;
+
+  background: #f8fafc;
+
+  border-radius: 10px;
+
+  padding: 13px 15px;
+}
+
+/* =========================================================
+   AI ENERGY ANALYST
+   ========================================================= */
+
+.ai-output {
+  margin-top: 18px;
+
+  padding: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fbff,
+      #f5f9ff
+    );
+
+  border: 1px solid #dce8fb;
+
+  border-radius: 12px;
+
+  color: var(--text);
+
+  white-space: pre-wrap;
+
+  line-height: 1.75;
+
+  font-size: 13px;
+
+  min-height: 90px;
+}
+
+.ai-output::before {
+  content: "AI INSIGHT";
+
+  display: block;
+
+  color: var(--primary);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 7px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* =========================================================
+   PAGES
+   ========================================================= */
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+
+  animation:
+    pageFade 0.25s ease;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   MODEL INFORMATION
+   ========================================================= */
+
+.model-info {
+  overflow-x: auto;
+}
+
+.model-info table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  font-size: 13px;
+}
+
+.model-info td {
+  padding: 13px 10px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.model-info tr:last-child td {
+  border-bottom: none;
+}
+
+.model-info td:first-child {
+  color: var(--muted);
+
+  font-weight: 650;
+
+  width: 40%;
+}
+
+.model-info td:last-child {
+  color: var(--text);
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   PEAK ANALYSIS
+   ========================================================= */
+
+#peak-analysis {
+  border-left: 4px solid var(--primary);
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f8fbff
+    );
+}
+
+#peak-text {
+  color: var(--text);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+/* =========================================================
+   BACKEND ONLINE STATUS
+   ========================================================= */
+
+#backend-status {
+  transition: color 0.2s ease;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef2f7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c4cedb;
+
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9eabbc;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .main {
+    padding: 24px 22px 45px;
+  }
+
+  .stats-grid {
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(180px, 1fr)
+      );
+  }
+
+  .two-col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE NAVIGATION
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .sidebar {
+    width: 255px;
+
+    transform: translateX(-100%);
+
+    transition:
+      transform 0.25s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+
+    box-shadow:
+      8px 0 35px rgba(15, 23, 42, 0.2);
+  }
+
+  .main {
+    margin-left: 0;
+
+    padding: 18px 16px 40px;
+  }
+
+  .menu-btn {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+  }
+
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  #chart-hourly,
+  #chart-dow {
+    height: 270px !important;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .topbar {
+    gap: 10px;
+
+    margin-bottom: 20px;
+  }
+
+  .topbar h2 {
+    font-size: 19px;
+  }
+
+  .badge {
+    font-size: 9px;
+
+    padding: 6px 9px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+  }
+
+  .card {
+    padding: 18px;
+
+    border-radius: 13px;
+  }
+
+  .stat {
+    min-height: 130px;
+  }
+
+  .stat p {
+    font-size: 27px;
+  }
+
+  #chart-trend {
+    height: 250px !important;
+  }
+
+  #chart-agg {
+    height: 260px !important;
+  }
+
+  #chart-hourly,
+  #chart-dow {
+    height: 250px !important;
+  }
+
+  .prediction-result {
+    font-size: 38px;
+
+    padding: 25px 0 20px;
+  }
+
+  button.primary,
+  #predict-btn {
+    width: 100%;
+  }
+}
